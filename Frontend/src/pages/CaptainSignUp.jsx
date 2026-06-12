@@ -25,10 +25,14 @@ export default function CaptainSignUp() {
       },
       email: formData.email,
       password: formData.password,
+
+      phoneNumber: formData.phoneNumber,
+      aadhaarNumber: formData.aadhaarNumber,
+
       vehicle: {
         color: formData.color,
         plate: formData.plate,
-        capacity: formData.capacity,
+        capacity: formData.vehicleType === "car" ? 4 : 10,
         vehicleType: formData.vehicleType,
       },
     };
@@ -76,21 +80,56 @@ export default function CaptainSignUp() {
           <input type="email" required placeholder='captain@example.com' className="bg-[#eeeeee] rounded px-4 py-2 border w-full text-lg placeholder:text-base mb-7" id='email' onChange={handleChange} />
           <h3 className='text-lg font-semibold mb-2'>Password</h3>
           <input type="password" required placeholder='password' className="bg-[#eeeeee] rounded px-4 py-2 border w-full text-lg placeholder:text-base mb-7" id='password' onChange={handleChange} />
-          <h3 className='text-lg font-semibold mb-2'>Vehicle Information</h3>
-          <div className="flex gap-2">
-            <input type="text" required placeholder='Color' className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-base mb-7" id='color' onChange={handleChange} />
-            <input type="text" required placeholder='Plate' className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-base mb-7" id='plate' onChange={handleChange} />
-          </div>
-          <div className="flex gap-1">
-            <input type="number" required placeholder='Capacity' className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-base mb-7" id='capacity' onChange={handleChange} />
-            <select id="vehicleType" className='bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-base mb-7' onChange={handleChange}>
-              <option value="">Select Vehicle Type</option>
-              <option value="car">Car</option>
-              <option value="bike">Bike</option>
-              <option value="auto">Auto</option>
-            </select>
-          </div>
+          <h3 className="text-lg font-semibold mb-2">Phone Number</h3>
+            <input
+              type="text"
+              required
+              placeholder="9876543210"
+              className="bg-[#eeeeee] rounded px-4 py-2 border w-full text-lg placeholder:text-base mb-7"
+              id="phoneNumber"
+              onChange={handleChange}
+            />
 
+            <h3 className="text-lg font-semibold mb-2">Aadhaar Number</h3>
+
+            <input
+              type="text"
+              required
+              placeholder="XXXX XXXX XXXX"
+              className="bg-[#eeeeee] rounded px-4 py-2 border w-full text-lg placeholder:text-base mb-7"
+              id="aadhaarNumber"
+              onChange={handleChange}
+            />
+          <h3 className='text-lg font-semibold mb-2'>Transport Information</h3>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                required
+                placeholder='Vehicle Color'
+                className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-base mb-7"
+                id='color'
+                onChange={handleChange}
+              />
+
+              <input
+                type="text"
+                required
+                placeholder='Vehicle Number'
+                className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-base mb-7"
+                id='plate'
+                onChange={handleChange}
+              />
+            </div>
+
+            <select
+              id="vehicleType"
+              className='bg-[#eeeeee] rounded px-4 py-2 border w-full text-lg placeholder:text-base mb-7'
+              onChange={handleChange}
+            >
+              <option value="">Select Transport Type</option>
+              <option value="car">E-Rickshaw (4 Seats)</option>
+              <option value="auto">Golf Cart (10 Seats)</option>
+            </select>
           <button className='bg-black text-white rounded px-4 py-2 border w-full text-lg font-semibold mb-2'>{loading?
           <div className='w-full h-full flex justify-center items-center z-50'>
             <div className="border-4 border-t-4 border-t-white border-gray-300 rounded-full w-8 h-8 animate-spin"></div>

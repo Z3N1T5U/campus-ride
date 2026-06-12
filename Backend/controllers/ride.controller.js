@@ -150,3 +150,41 @@ export const getCurrentCaptainRide = async (req, res, next) => {
         next(error);
     }
 };
+
+export const getUserRideHistory = async (req, res, next) => {
+    try {
+
+        const rides = await rideModel
+            .find({
+                user: req.user._id,
+                status: "completed"
+            })
+            .populate("captain")
+            .sort({ createdAt: -1 });
+
+        return res.status(200).json(rides);
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getCaptainRideHistory = async (req, res, next) => {
+    try {
+
+        const rides = await rideModel
+            .find({
+                captain: req.captain._id,
+                status: "completed"
+            })
+            .populate("user")
+            .sort({ createdAt: -1 });
+
+        return res.status(200).json(rides);
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+

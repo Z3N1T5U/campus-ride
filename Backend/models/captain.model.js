@@ -21,6 +21,23 @@ const captainSchema = new mongoose.Schema({
         lowercase: true,
         match: [/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/, "Please Enter a Valid Email"],
     },
+
+    phoneNumber: {
+    type: String,
+    required: true,
+    },
+
+    aadhaarNumber: {
+        type: String,
+        required: true,
+    },
+
+    verificationStatus: {
+        type: String,
+        enum: ["pending", "verified", "rejected"],
+        default: "pending",
+    },
+
     password: {
         type: String,
         required: true,

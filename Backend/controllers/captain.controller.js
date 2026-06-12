@@ -11,7 +11,9 @@ export const signUpCaptain = async (req, res, next) => {
         return next(errorHandler(400, errors.array()))
     }
 
-    const {fullName, email, password, vehicle} = req.body;
+    const {fullName, email, password, 
+        vehicle,phoneNumber,
+        aadhaarNumber} = req.body;
 
     const isCaptainAlreadyExist = await captainModel.findOne({email});
 
@@ -26,10 +28,15 @@ export const signUpCaptain = async (req, res, next) => {
         lastName: fullName.lastName,
         email,
         password: hashedPassword,
+
+        phoneNumber,
+        aadhaarNumber,
+
         color: vehicle.color,
         plate: vehicle.plate,
         capacity: vehicle.capacity,
         vehicleType: vehicle.vehicleType,
+        
         userType: 'captain',
     });
 
