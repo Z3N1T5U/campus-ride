@@ -126,6 +126,18 @@ export default function CaptainDetails() {
         </div>
 
         <div className="text-center">
+          <i className="text-3xl mb-2 ri-star-fill text-yellow-500"></i>
+
+          <h5 className="text-lg font-medium">
+            {stats.averageRating}
+          </h5>
+
+          <p className="text-sm text-gray-600">
+            Driver Rating
+          </p>
+        </div>
+
+        <div className="text-center">
           <i
             className={`text-3xl mb-2 ${
               stats.captainStatus === "active"
@@ -142,6 +154,7 @@ export default function CaptainDetails() {
             Driver Status
           </p>
         </div>
+
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import captainModel from "../models/captain.model.js";
 import blackListToken from "../models/blocklistToken.model.js";
 import { errorHandler } from "../middlewares/error.js";
 import rideModel from "../models/ride.model.js";
+import Rating from "../models/rating.model.js";
 
 export const signUpCaptain = async (req, res, next) => {
     const errors = validationResult(req);
@@ -112,11 +113,26 @@ export const getCaptainDashboardStats = async (req, res, next) => {
             0
         );
 
+        const ratings = await Rating.find({
+            captain: req.captain._id
+        });
+
+        const averageRating =
+            ratings.length > 0
+                ? (
+                    ratings.reduce(
+                        (sum, rating) => sum + rating.rating,
+                        0
+                    ) / ratings.length
+                ).toFixed(1)
+                : 0;
+
         const captain = await captainModel.findById(req.captain._id);
         return res.status(200).json({
             completedRides,
             activeRides,
             totalEarnings,
+            averageRating,
             verificationStatus: req.captain.verificationStatus,
             captainStatus: captain.status
         });
