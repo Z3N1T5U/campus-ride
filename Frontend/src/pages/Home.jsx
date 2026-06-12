@@ -18,6 +18,8 @@ import LiveTracking from '../components/LiveTracking';
 import { useDebounceCallback } from 'usehooks-ts';
 import axios from 'axios';
 
+import campusLocations from "../data/campusLocations";
+
 let newSocket;
 export default function Home() {
 
@@ -193,24 +195,30 @@ useEffect(() => {
         setSuggestion(null);
         return;
       }
+
       console.log("input ", query)
       console.log("first running fetchSuggestion")
-      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=IN&limit=5`;
-      
-      const response = await axios.get(url);
-      
-      if (response.data.length === 0) {
-          console.log("No suggestion");
-          return;
-      }
-      // console.log("response ",response.data);
-      const formattedData = response.data.map(place => ({
-        name: place.display_name,
-        ltd: parseFloat(place.lat),
-        lng: parseFloat(place.lon)
-      }));
-      // console.log("formated data: ", formattedData)
-      setSuggestion(formattedData);
+
+      const search = query.toLowerCase();
+
+      const filteredLocations = campusLocations
+        .filter(location => {
+          return (
+            location.name.toLowerCase().includes(search) ||
+            (location.aliases &&
+              location.aliases.some(alias =>
+                alias.toLowerCase().includes(search)
+              ))
+          );
+        })
+        .slice(0, 8)
+        .map(location => ({
+          name: location.name,
+          ltd: location.lat,
+          lng: location.lng
+        }));
+
+      setSuggestion(filteredLocations);
     }
     catch (error) {
       console.log(error.message);

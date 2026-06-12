@@ -20,8 +20,10 @@ export const createRideController = async (req, res, next) => {
 
         const ride = await createRide({ user: req.user._id, pickup, destination, vehicleType, pickupLocation, distance: Math.round(distanceAndTime.distance), duration: Math.round(distanceAndTime.duration)});
 
-        const captainsInRadius = await getCaptainsInTheRadius(pickupLocation.ltd, pickupLocation.lng, 2);
-        console.log("captains: ", captainsInRadius);
+        const captainsInRadius = await getCaptainsInTheRadius(
+            pickupLocation.ltd, pickupLocation.lng, 2);
+        console.log("CAPTAINS FOUND:", captainsInRadius.length);
+        console.log(captainsInRadius);
 
         const rideWithUser = await rideModel.findOne({_id: ride._id}).populate('user');
 

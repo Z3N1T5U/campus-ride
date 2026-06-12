@@ -54,11 +54,11 @@ export const getCaptainsInTheRadius = async (ltd, lng, radius) => {
     // radius in KM
     const captains = await captainModel.find({
         status: "active",
-        location: {
-            $geoWithin: {
-                $centerSphere: [[ltd, lng], radius/3963.2]
-            }
-        }
+        // location: {
+        //     $geoWithin: {
+        //         $centerSphere: [[ltd, lng], radius/3963.2]
+        //     }
+        // }
     });
 
     return captains;
