@@ -26,12 +26,22 @@ export const createRideController = async (req, res, next) => {
 
             try {
                 captainsInRadius = await getCaptainsInTheRadius(
-                    pickupLocation.ltd,
-                    pickupLocation.lng,
-                    2
-                );
+                pickupLocation.ltd,
+                pickupLocation.lng,
+                2
+            );
 
-                console.log("CAPTAINS FOUND:", captainsInRadius.length);
+            console.log("BEFORE FILTER");
+            console.log(captainsInRadius);
+
+            captainsInRadius = captainsInRadius.filter(
+                captain => captain.verificationStatus === "approved"
+            );
+
+            console.log("AFTER FILTER");
+            console.log(captainsInRadius);
+
+            console.log("CAPTAINS FOUND:", captainsInRadius.length);
 
             } catch (err) {
                 console.log("GET CAPTAINS ERROR:");

@@ -176,3 +176,43 @@ export const toggleCaptainStatus = async (req, res, next) => {
         next(error);
     }
 };
+
+export const approveCaptain = async (req, res, next) => {
+    try {
+
+        const captain = await captainModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                verificationStatus: "approved"
+            },
+            {
+                new: true
+            }
+        );
+
+        res.status(200).json(captain);
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const rejectCaptain = async (req, res, next) => {
+    try {
+
+        const captain = await captainModel.findByIdAndUpdate(
+            req.params.id,
+            {
+                verificationStatus: "rejected"
+            },
+            {
+                new: true
+            }
+        );
+
+        res.status(200).json(captain);
+
+    } catch (error) {
+        next(error);
+    }
+};

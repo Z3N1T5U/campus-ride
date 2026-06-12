@@ -6,7 +6,9 @@ import {
     getCaptainProfile,
     captainLogout,
     getCaptainDashboardStats,
-    toggleCaptainStatus
+    toggleCaptainStatus,
+    approveCaptain,
+    rejectCaptain
 } from "../controllers/captain.controller.js";
 import { authCaptainMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -45,6 +47,16 @@ router.patch(
     "/toggle-status",
     authCaptainMiddleware,
     toggleCaptainStatus
+);
+
+router.patch(
+    "/approve/:id",
+    approveCaptain
+);
+
+router.patch(
+    "/reject/:id",
+    rejectCaptain
 );
 
 export default router;
