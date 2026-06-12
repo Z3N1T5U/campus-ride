@@ -4,11 +4,11 @@
 
 ### Frontend
 
-**Live URL:** `ADD_FRONTEND_DEPLOYMENT_LINK_HERE`
+**Live URL:** 
 
 ### Backend API
 
-**API URL:** `ADD_BACKEND_DEPLOYMENT_LINK_HERE`
+**API URL:** 
 
 ---
 
