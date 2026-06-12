@@ -21,6 +21,7 @@ import axios from 'axios';
 import campusLocations from "../data/campusLocations";
 import { Link } from "react-router-dom";
 
+
 let newSocket;
 export default function Home() {
 
@@ -54,6 +55,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [socket, setSocket] = useState(null);
   const [ride, setRide] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
 
   const vehiclePanelRef = useRef(null);
   const confirmRidePanelRef = useRef(null);
@@ -406,7 +409,7 @@ console.log("created ride: ", data);
   return (
 
     <>
-{showRatingPopup && (
+    {showRatingPopup && (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
 
         <div className="bg-white p-6 rounded-xl w-[90%] max-w-sm">
@@ -415,18 +418,70 @@ console.log("created ride: ", data);
                 Rate Your Driver
             </h2>
 
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
                 Ride completed successfully.
             </p>
 
+            <div className="flex justify-center gap-2 mb-4">
+                {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                        key={star}
+                        onClick={() => setRating(star)}
+                        className="text-3xl"
+                    >
+                        {star <= rating ? "⭐" : "☆"}
+                    </button>
+                ))}
+            </div>
+
+            <textarea
+                placeholder="Optional feedback..."
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                className="w-full border rounded-lg p-2 mb-4"
+            />
+
             <button
-                onClick={() => {
-                    localStorage.removeItem("completedRide");
-                    setShowRatingPopup(false);
-                }}
-                className="mt-4 bg-black text-white px-4 py-2 rounded-lg"
+                onClick={async () => {
+
+                  try {
+
+                      const ride = JSON.parse(
+                          localStorage.getItem("completedRide")
+                      );
+
+                      const res = await fetch(
+                          "/api/ratings/submit",
+                          {
+                              method: "POST",
+                              headers: {
+                                  "Content-Type": "application/json",
+                                  Authorization: `Bearer ${localStorage.getItem("token")}`
+                              },
+                              body: JSON.stringify({
+                                  rideId: ride._id,
+                                  rating,
+                                  feedback
+                              })
+                          }
+                      );
+
+                      const data = await res.json();
+
+                      console.log("RATING RESPONSE");
+                      console.log(data);
+
+                      localStorage.removeItem("completedRide");
+                      setShowRatingPopup(false);
+
+                  } catch (error) {
+                      console.log(error);
+                  }
+
+              }}
+                className="w-full bg-black text-white py-2 rounded-lg"
             >
-                Close
+                Submit Rating
             </button>
 
         </div>
