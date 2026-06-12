@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    CartesianGrid
+} from "recharts";
 
 export default function Insights() {
 
     const [analytics, setAnalytics] = useState(null);
+
+    const hourlyData =
+    analytics?.hourlyData || [];
+
+const pickupData =
+    analytics?.pickupData || [];
 
     useEffect(() => {
         fetchAnalytics();
@@ -97,6 +112,70 @@ export default function Insights() {
                     {analytics.demandPrediction}
                 </p>
             </div>
+
+            <div className="bg-white rounded-xl p-4 shadow mt-4">
+
+    <h3 className="text-lg font-semibold mb-4">
+        Ride Demand By Hour
+    </h3>
+
+    <div style={{ width: "100%", height: 300 }}>
+
+        <ResponsiveContainer>
+
+            <BarChart data={hourlyData}>
+
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis dataKey="hour" />
+
+                <YAxis />
+
+                <Tooltip />
+
+                <Bar
+                    dataKey="rides"
+                />
+
+            </BarChart>
+
+        </ResponsiveContainer>
+
+    </div>
+
+</div>
+
+<div className="bg-white rounded-xl p-4 shadow mt-4">
+
+    <h3 className="text-lg font-semibold mb-4">
+        Top Pickup Locations
+    </h3>
+
+    <div style={{ width: "100%", height: 300 }}>
+
+        <ResponsiveContainer>
+
+            <BarChart data={pickupData}>
+
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis dataKey="pickup" />
+
+                <YAxis />
+
+                <Tooltip />
+
+                <Bar
+                    dataKey="rides"
+                />
+
+            </BarChart>
+
+        </ResponsiveContainer>
+
+    </div>
+
+</div>
 
         </div>
     );

@@ -50,7 +50,7 @@ export const getAnalyticsDashboard = async (req, res, next) => {
                 )
                 : "No Data";
 
-        // Peak Hour
+        // Peak Hour + Hourly Data
 
         const hourMap = {};
 
@@ -78,6 +78,31 @@ export const getAnalyticsDashboard = async (req, res, next) => {
                 )
                 : "N/A";
 
+        const hourlyData = Object.keys(hourMap)
+            .sort((a, b) => Number(a) - Number(b))
+            .map((hour) => ({
+                hour: `${hour}:00`,
+                rides: hourMap[hour]
+            }));
+
+        // Popular Pickups
+
+        const pickupMap = {};
+
+        rides.forEach((ride) => {
+
+            pickupMap[ride.pickup] =
+                (pickupMap[ride.pickup] || 0) + 1;
+        });
+
+        const pickupData = Object.keys(pickupMap)
+            .map((pickup) => ({
+                pickup,
+                rides: pickupMap[pickup]
+            }))
+            .sort((a, b) => b.rides - a.rides)
+            .slice(0, 5);
+
         const demandPrediction =
             peakHour !== "N/A"
                 ? `High demand expected around ${peakHour}:00`
@@ -89,7 +114,10 @@ export const getAnalyticsDashboard = async (req, res, next) => {
             averageRating,
             popularRoute,
             peakHour,
-            demandPrediction
+            demandPrediction,
+
+            hourlyData,
+            pickupData
         });
 
     } catch (error) {

@@ -2,17 +2,30 @@ import React from 'react'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {useSelector} from "react-redux";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid
+} from "recharts";
 
 export default function CaptainDetails() {
 
   const {currentCaptain} = useSelector((state)=> state.captain);
 
   const [stats, setStats] = useState({
-    completedRides: 0,
-    activeRides: 0,
-    totalEarnings: 0,
-    verificationStatus: "pending"
-  });
+  completedRides: 0,
+  activeRides: 0,
+  totalEarnings: 0,
+  verificationStatus: "pending",
+  averageRating: 0,
+  rideChartData: [],
+  peakHour: "N/A",
+  demandPrediction: ""
+});
 
   useEffect(() => {
     fetchStats();
@@ -156,6 +169,59 @@ export default function CaptainDetails() {
         </div>
 
       </div>
+      <div className="bg-white rounded-xl p-4 shadow mt-6">
+
+  <h3 className="text-lg font-semibold mb-4">
+    Driver Analytics
+  </h3>
+
+  <div className="grid grid-cols-2 gap-4 mb-4">
+
+    <div className="bg-gray-100 rounded-lg p-3">
+      <p className="text-sm text-gray-500">
+        Peak Hour
+      </p>
+
+      <h4 className="text-xl font-bold">
+        {stats.peakHour}:00
+      </h4>
+    </div>
+
+    <div className="bg-yellow-100 rounded-lg p-3">
+      <p className="text-sm text-gray-500">
+        Demand Prediction
+      </p>
+
+      <h4 className="font-semibold">
+        High Demand
+      </h4>
+    </div>
+
+  </div>
+
+  <div style={{ width: "100%", height: 250 }}>
+
+    <ResponsiveContainer>
+
+      <BarChart data={stats.rideChartData}>
+
+        <CartesianGrid strokeDasharray="3 3" />
+
+        <XAxis dataKey="month" />
+
+        <YAxis />
+
+        <Tooltip />
+
+        <Bar dataKey="rides" />
+
+      </BarChart>
+
+    </ResponsiveContainer>
+
+  </div>
+
+</div>
     </div>
   );
 }

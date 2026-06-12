@@ -127,14 +127,83 @@ export const getCaptainDashboardStats = async (req, res, next) => {
                 ).toFixed(1)
                 : 0;
 
-        const captain = await captainModel.findById(req.captain._id);
+        // Monthly Ride Chart
+
+            const monthMap = {};
+
+            completedRideDocs.forEach((ride) => {
+
+                if (!ride.createdAt) return;
+
+                const date = new Date(ride.createdAt);
+
+                if (isNaN(date.getTime())) return;
+
+                const month = date.toLocaleString(
+                    "default",
+                    {
+                        month: "short"
+                    }
+                );
+
+                monthMap[month] =
+                    (monthMap[month] || 0) + 1;
+            });
+
+            const rideChartData = Object.keys(monthMap)
+                .map((month) => ({
+                    month,
+                    rides: monthMap[month]
+                }));           
+
+        // Peak Hour
+
+        const hourMap = {};
+
+        completedRideDocs.forEach((ride) => {
+
+            if (!ride.createdAt) return;
+
+            const hour = new Date(
+                ride.createdAt
+            ).getHours();
+
+            if (isNaN(hour)) return;
+
+            hourMap[hour] =
+                (hourMap[hour] || 0) + 1;
+        });
+
+        const peakHour =
+            Object.keys(hourMap).length
+                ? Object.keys(hourMap).reduce(
+                    (a, b) =>
+                        hourMap[a] > hourMap[b]
+                            ? a
+                            : b
+                )
+                : "N/A";
+
+        const demandPrediction =
+            peakHour !== "N/A"
+                ? `High demand expected around ${peakHour}:00`
+                : "Not enough data";
+
+        const captain = await captainModel.findById(
+            req.captain._id
+        );
+
         return res.status(200).json({
             completedRides,
             activeRides,
             totalEarnings,
             averageRating,
             verificationStatus: req.captain.verificationStatus,
-            captainStatus: captain.status
+            captainStatus: captain.status,
+
+            rideChartData,
+            peakHour,
+            demandPrediction
         });
 
     } catch (error) {
