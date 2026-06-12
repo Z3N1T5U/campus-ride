@@ -19,6 +19,7 @@ import { useDebounceCallback } from 'usehooks-ts';
 import axios from 'axios';
 
 import campusLocations from "../data/campusLocations";
+import { Link } from "react-router-dom";
 
 let newSocket;
 export default function Home() {
@@ -424,6 +425,13 @@ useEffect(() => {
             </select>
           </div>
         </div>
+
+        <Link
+          to="/ride-history"
+          className="absolute top-5 right-5 bg-white px-3 py-2 rounded-lg shadow z-20"
+      >
+          History
+      </Link>
 
         <div ref={vehiclePanelRef} className="fixed w-full z-10 bottom-0 px-3 py-10 bg-white translate-y-full">
           <VehiclePanel setVehiclePanel={setVehiclePanel} setConfirmRidePanel={setConfirmRidePanel} fare={fare} setSelectedFare={setSelectedFare} setVechicleImg={setVechicleImg} setVehicleType={setVehicleType} />

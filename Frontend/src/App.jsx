@@ -13,6 +13,7 @@ import CaptainPrivateRoute from './components/CaptainPrivateRoute';
 import Riding from './pages/Riding';
 import CaptainRiding from './pages/CaptainRiding';
 import { SocketProvider } from './components/SocketConnect';
+import RideHistory from "./pages/RideHistory";
 
 export default function App() {
   return (
@@ -24,12 +25,12 @@ export default function App() {
           <Route path='/signup' element={<UserSignUp />} />
           <Route path='/captain-login' element={<CaptainLogin />} />
           <Route path='/captain-signup' element={<CaptainSignUp />} />
+          <Route path="/ride-history"element={<RideHistory />}/>
           <Route element={<PrivateRoute />}>
             <Route path='/home' element={<Home />} />
             <Route path='/user/logout' element={<UserLogout />} />
             <Route path='/riding' element={<Riding />} />
           </Route>
-
           <Route element={<CaptainPrivateRoute />}>
             <Route path='/captain-home' element={<CaptainHome />} />
             <Route path='/captain-riding' element={<CaptainRiding />} />

@@ -187,4 +187,3 @@ export const getCaptainRideHistory = async (req, res, next) => {
     }
 };
 
-

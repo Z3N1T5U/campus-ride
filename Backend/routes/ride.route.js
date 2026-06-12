@@ -7,7 +7,9 @@ import {
     startRide,
     endRide,
     getCurrentUserRide,
-    getCurrentCaptainRide
+    getCurrentCaptainRide,
+    getUserRideHistory,
+    getCaptainRideHistory
 } from "../controllers/ride.controller.js";
 import { authCaptainMiddleware, authUserMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -58,6 +60,18 @@ router.get(
     "/current-captain-ride",
     authCaptainMiddleware,
     getCurrentCaptainRide
+);
+
+router.get(
+    "/history/user",
+    authUserMiddleware,
+    getUserRideHistory
+);
+
+router.get(
+    "/history/captain",
+    authCaptainMiddleware,
+    getCaptainRideHistory
 );
 
 export default router;
