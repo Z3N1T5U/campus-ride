@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import captainModel from "../models/captain.model.js";
 import blackListToken from "../models/blocklistToken.model.js";
 import { errorHandler } from "../middlewares/error.js";
+import rideModel from "../models/ride.model.js";
 
 export const signUpCaptain = async (req, res, next) => {
     const errors = validationResult(req);
@@ -36,7 +37,7 @@ export const signUpCaptain = async (req, res, next) => {
         plate: vehicle.plate,
         capacity: vehicle.capacity,
         vehicleType: vehicle.vehicleType,
-        
+
         userType: 'captain',
     });
 
@@ -85,3 +86,77 @@ export const captainLogout = async (req, res, next) => {
 
     res.status(200).json({message: "Logout successfully"});
 }
+
+export const getCaptainDashboardStats = async (req, res, next) => {
+    try {
+
+        const completedRides = await rideModel.countDocuments({
+            captain: req.captain._id,
+            status: "completed"
+        });
+
+        const activeRides = await rideModel.countDocuments({
+            captain: req.captain._id,
+            status: {
+                $in: ["accepted", "ongoing"]
+            }
+        });
+
+        const completedRideDocs = await rideModel.find({
+            captain: req.captain._id,
+            status: "completed"
+        });
+
+        const totalEarnings = completedRideDocs.reduce(
+            (sum, ride) => sum + ride.fare,
+            0
+        );
+
+        const captain = await captainModel.findById(req.captain._id);
+        return res.status(200).json({
+            completedRides,
+            activeRides,
+            totalEarnings,
+            verificationStatus: req.captain.verificationStatus,
+            captainStatus: captain.status
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const toggleCaptainStatus = async (req, res, next) => {
+    try {
+
+        const captain = await captainModel.findById(req.captain._id);
+
+        console.log("CURRENT STATUS:", captain.status);
+
+        const newStatus =
+            captain.status === "active"
+                ? "inactive"
+                : "active";
+
+        console.log("NEW STATUS:", newStatus);
+
+        const updatedCaptain = await captainModel.findByIdAndUpdate(
+            req.captain._id,
+            {
+                status: newStatus
+            },
+            {
+                new: true
+            }
+        );
+
+        console.log("AFTER UPDATE:", updatedCaptain.status);
+
+        return res.status(200).json({
+            status: updatedCaptain.status
+        });
+
+    } catch (error) {
+        next(error);
+    }
+};
