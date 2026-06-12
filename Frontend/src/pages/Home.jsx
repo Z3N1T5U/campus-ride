@@ -544,12 +544,23 @@ console.log("created ride: ", data);
           </div>
         </div>
 
-        <Link
-          to="/ride-history"
-          className="absolute top-5 right-5 bg-white px-3 py-2 rounded-lg shadow z-20"
-      >
-          History
-      </Link>
+        <div className="absolute top-5 right-5 flex gap-2 z-20">
+
+  <Link
+    to="/insights"
+    className="bg-white px-3 py-2 rounded-lg shadow"
+  >
+    Insights
+  </Link>
+
+  <Link
+    to="/ride-history"
+    className="bg-white px-3 py-2 rounded-lg shadow"
+  >
+    History
+  </Link>
+
+</div>
 
         <div ref={vehiclePanelRef} className="fixed w-full z-10 bottom-0 px-3 py-10 bg-white translate-y-full">
           <VehiclePanel setVehiclePanel={setVehiclePanel} setConfirmRidePanel={setConfirmRidePanel} fare={fare} setSelectedFare={setSelectedFare} setVechicleImg={setVechicleImg} setVehicleType={setVehicleType} />

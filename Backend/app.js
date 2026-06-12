@@ -9,6 +9,7 @@ import userRoutes from "./routes/user.route.js";
 import captainRoutes from "./routes/captain.route.js";
 import mapsRoutes from "./routes/maps.route.js";
 import rideRoutes from "./routes/ride.route.js";
+import analyticsRoutes from "./routes/analytics.route.js";
 
 import path from "path"
 
@@ -22,6 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use("/api/ratings", ratingRoutes);
+app.use(
+    "/api/analytics",
+    analyticsRoutes
+);
 
 connectToDB();
 
