@@ -22,34 +22,6 @@ Built using the MERN Stack with Socket.IO and Leaflet integration, the platform 
 
 ---
 
-## Website Preview
-
-### Ride Booking
-
-(Add Screenshot)
-
-### Driver Ride Request
-
-(Add Screenshot)
-
-### OTP Verification
-
-(Add Screenshot)
-
-### Ride Tracking
-
-(Add Screenshot)
-
-### Driver Dashboard
-
-(Add Screenshot)
-
-### Campus Insights Dashboard
-
-(Add Screenshot)
-
----
-
 ## Key Features
 
 ### Authentication & User Management
