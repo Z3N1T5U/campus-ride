@@ -28,6 +28,11 @@ const rideSchema = new mongoose.Schema({
         default: 'pending',
     },
 
+    passengerCount: {
+    type: Number,
+    default: 1
+},
+
     duration: {
         type: Number,
     },//in second

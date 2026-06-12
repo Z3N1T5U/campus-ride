@@ -13,12 +13,12 @@ export const createRideController = async (req, res, next) => {
         return res.status(400).json({ error: errors.array() });
     }
 
-    const { pickup, destination, vehicleType, pickupLocation } = req.body;
+    const { pickup, destination, vehicleType, pickupLocation,passengerCount } = req.body;
     
     try {
         const distanceAndTime = await getDistanceTimeService(pickup, destination);
 
-        const ride = await createRide({ user: req.user._id, pickup, destination, vehicleType, pickupLocation, distance: Math.round(distanceAndTime.distance), duration: Math.round(distanceAndTime.duration)});
+        const ride = await createRide({ user: req.user._id, pickup, destination, vehicleType, pickupLocation, distance: Math.round(distanceAndTime.distance), duration: Math.round(distanceAndTime.duration),passengerCount});
 
         const captainsInRadius = await getCaptainsInTheRadius(
             pickupLocation.ltd, pickupLocation.lng, 2);
@@ -46,9 +46,9 @@ export const calculateGetFare = async (req, res, next) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { pickup, destination } = req.body;
+    const { pickup, destination,passengerCount } = req.body;
 
-    const fare = await getFare(pickup, destination);
+    const fare = await getFare(pickup, destination, passengerCount);
     return res.status(200).json(fare);
 };
 

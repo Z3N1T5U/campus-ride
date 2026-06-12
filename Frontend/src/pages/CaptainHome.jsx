@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import uberLogo from "../../public/images/uber logo.png";
+import iitrlogo from "../../public/images/campus_logo.png";
 import CaptainDetails from '../components/CaptainDetails';
 import Ridepopup from '../components/Ridepopup';
 import { useGSAP } from "@gsap/react";
@@ -187,7 +187,7 @@ export default function CaptainHome() {
   return (
     <div className='h-screen'>
       <div className="fixed p-3 top-0 w-full flex items-center justify-between z-20">
-        <img src={uberLogo} alt="" className="w-16" />
+        <img src={iitrlogo} alt="" className="w-16" />
         <Link to='/home' className="h-10 w-10 bg-white flex items-center justify-center rounded-full">
           <i className=" text-lg ri-logout-box-r-line"></i>
         </Link>

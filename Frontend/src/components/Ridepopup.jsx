@@ -5,7 +5,7 @@ export default function Ridepopup({setRidePopupPanel, setConfirmRidePopup,ride, 
   return (
     <div>
       <h5 onClick={() => setRidePopupPanel(false)} className="p-1 text-center absolute top-0 w-[93%] cursor-pointer"><i className="ri-arrow-down-wide-fill text-2xl text-gray-500"></i></h5>
-            <h3 className="text-2xl font-semibold mb-3 mt-2">New Ride Available!</h3>
+            <h3 className="text-2xl font-semibold mb-3 mt-2">New Ride Request!</h3>
             <div className="flex items-center justify-between p-3 mt-4 bg-yellow-400 rounded-lg">
                 <div className="flex items-center gap-3">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAp3Z1hXfTVTKtbw3vE75-rtfr1ZCFcPSw4A&s" alt="" className="h-10 w-10 rounded-full object-cover" />
@@ -27,8 +27,12 @@ export default function Ridepopup({setRidePopupPanel, setConfirmRidePopup,ride, 
                   <div className="">
                     <h3 className='font-semibold text-lg line-clamp-2'>{ride?.destination}</h3>
                     <p className='text-gray-600 text-sm -mt-1'>Lorem ipsum dolor sit amet.</p>
+                    <p className="text-sm text-gray-600">
+                      Passengers: {ride?.passengerCount}
+                    </p>
                   </div>
                 </div>
+                
                 <div className="flex items-center gap-5 p-2">
                 <i className="ri-money-rupee-circle-fill text-xl"></i>
                   <div className="">

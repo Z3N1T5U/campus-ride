@@ -64,7 +64,7 @@ export default function CaptainSignUp() {
   return (
     <div className='p-5 h-screen flex flex-col justify-between'>
       <div className="">
-        <img src="https://www.svgrepo.com/show/505031/uber-driver.svg" alt="" className="w-16 mb-2" />
+        <img src="/images/campusblack_logo.png" alt="" className="w-16 mb-2" />
         <form className="p-3" onSubmit={handleSubmit}>
           <h3 className="text-lg font-semibold mb-2">What's your name</h3>
           <div className="flex gap-2 mb-7">
@@ -104,7 +104,6 @@ export default function CaptainSignUp() {
       {/* <div className="p-3">
           <Link to='/captain-signup' className="bg-[#10b461] flex items-center justify-center text-white rounded px-4 py-2 border w-full text-lg font-semibold">Sign In as Captain</Link>
         </div> */}
-      <p className="text-xs text-justify mt-2">We collect basic information and uploaded images to provide services and improve accuracy.Your data is secure, used only for analysis, and not shared without consent. using AgriScan, you agree to this policy.For questions, contact us at <span className="underline cursor-pointer">uberproject@gmail.com</span>.</p>
     </div>
   )
 }

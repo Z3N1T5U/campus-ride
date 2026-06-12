@@ -1,5 +1,5 @@
 import React from 'react'
-import uberCar from "/images/uber car.webp";
+import erick from "/images/e-rick.png";
 
 export default function WaitingForDriver({setWaitingForDriver, ride}) {
   return (
@@ -11,7 +11,7 @@ export default function WaitingForDriver({setWaitingForDriver, ride}) {
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCbU49DD_iYcjSUEXG-Oy7POjJzaMn1GYEZg&s" alt="" className="w-full h-full object-cover" />
           </div>
           <div className="w-14 h-14 rounded-full border-2 border-gray-400 overflow-hidden absolute top-0 right-2">
-            <img src={uberCar} alt="" className="w-full h-full object-contain" />
+            <img src={erick} alt="" className="w-full h-full object-contain" />
           </div>
         </div>
         <div className="text-right">

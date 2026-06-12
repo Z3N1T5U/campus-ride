@@ -5,54 +5,29 @@ import crypto from "crypto";
 import { sendMessageToSocketId } from "../socket.js";
 
 
-export const getFare = async (pickup, destination) => {
-    if (!pickup || !destination) {
+export const getFare = async (pickup, destination,passengerCount) => {
+    if (!pickup || !destination || !passengerCount) {
         return errorHandler(400, "Pickup and destination are required");
     }
 
-    const pickupCordinate = { ltd: pickup.ltd, lng: pickup.lng };
-    const destinationCordinate = { ltd: destination.ltd, lng: destination.lng };
-
-    const distanceTime = await getDistanceTimeService(pickupCordinate, destinationCordinate);
-
-    // base fare
-    const baseFare = {
-        auto: 30,
-        car: 50,
-        bike: 20
+    const fare = passengerCount * 10;
+    return {
+        car: fare,
+        auto: fare,
+        bike: fare
     };
-
-    const perKmRate = {
-        auto: 10,
-        car: 15,
-        bike: 8
-    };
-
-    const perMinuteRate = {
-        auto: 2,
-        car: 3,
-        bike: 1.5
-    };
-
-    const fare = {
-        auto: Math.round(baseFare.auto + (distanceTime.distance * perKmRate.auto) + (distanceTime.duration * perMinuteRate.auto)),
-        car: Math.round(baseFare.car + (distanceTime.distance * perKmRate.car) + (distanceTime.duration * perMinuteRate.car)),
-        bike: Math.round(baseFare.bike + (distanceTime.distance * perKmRate.bike) + (distanceTime.duration * perMinuteRate.bike))
-    };
-
-    return fare;
 };
 
 
-export const createRide = async ({ user, pickup, destination, vehicleType, pickupLocation, distance, duration }) => {
-    if (!user || !pickup || !destination || !vehicleType || !pickupLocation || !distance || !duration) {
+export const createRide = async ({ user, pickup, destination, vehicleType, pickupLocation, distance, duration, passengerCount }) => {
+    if (!user || !pickup || !destination || !vehicleType || !pickupLocation || !distance || !duration || !passengerCount) {
         return errorHandler(400, "All fields are required");
     }
 
     const fare = await getFare(pickup, destination);
 
     const ride = rideModel.create({
-        user, pickup: pickup.name, destination: destination.name, fare: fare[vehicleType], otp: getOtp(6), pickupLocation, distance, duration
+        user, pickup: pickup.name, destination: destination.name, passengerCount,fare: fare[vehicleType]*passengerCount, otp: getOtp(6), pickupLocation, distance, duration
     });
 
     return ride;

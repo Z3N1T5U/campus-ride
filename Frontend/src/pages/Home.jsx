@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import UberBlackLogo from '/images/uber logo.png';
+import iitrblacklogo from '/images/campusblack_logo.png';
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 import 'remixicon/fonts/remixicon.css'
@@ -33,6 +33,7 @@ export default function Home() {
     ltd: null,
     lng: null
   });
+  const [passengerCount, setPassengerCount] = useState(1);
   const [panelOpen, setPanelOpen] = useState(false);
   const [restoringRide, setRestoringRide] = useState(false);
   const panelRef = useRef(null);
@@ -301,7 +302,7 @@ useEffect(() => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          pickup, destination
+          pickup, destination, passengerCount
         })
       });
 
@@ -333,6 +334,7 @@ useEffect(() => {
           pickup,
           destination,
           vehicleType,
+          passengerCount,
           pickupLocation: {
             ltd: pickup.ltd,
             lng: pickup.lng
@@ -374,7 +376,7 @@ useEffect(() => {
             Active Ride Found • Restoring Session...
         </div>
       )}
-      <img src={UberBlackLogo} alt="" className="w-16 mb-5 absolute top-5 left-5 z-20" />
+      <img src={iitrblacklogo} alt="" className="w-16 mb-5 absolute top-5 left-5 z-20" />
       <div className="h-screen w-screen relative z-10">
         {hasPickupLocation && (
           <LiveTracking location={pickup} />
@@ -383,7 +385,7 @@ useEffect(() => {
       <div className="h-screen flex flex-col justify-end absolute top-0 w-full z-20">
         <div className="h-[32%] p-5 bg-white relative">
           <h5 ref={showBtnRef} onClick={() => setPanelOpen(false)} className='absolute top-2 right-3 text-2xl cursor-pointer'><i className="ri-arrow-down-wide-fill"></i></h5>
-          <h4 className='text-2xl font-semibold'>Find a Trip</h4>
+          <h4 className='text-2xl font-semibold'>Book Campus Ride</h4>
           <form onSubmit={handleSumbit} className="relative">
             <div className="line absolute h-16 w-1 top-[25%] left-4 bg-gray-700 rounded-full"></div>
             <input type="text" id='pickup' className="bg-[#eee] px-8 py-2 text-base rounded-lg w-full outline-none" placeholder='Add a pick-up location' onClick={() => setPanelOpen(true)} onChange={handlePickupChange} value={pickup.name} />
@@ -395,7 +397,32 @@ useEffect(() => {
         </div>
 
         <div ref={panelRef} className="bg-white h-0 overflow-hidden">
-          <LocationSearchPanel setPanelOpen={setPanelOpen} setVehiclePanel={setVehiclePanel} suggestion={suggestion} activeField={activeField} setPickup={setPickup} setDestination={setDestination} setSuggestion={setSuggestion} />
+          <LocationSearchPanel
+            setPanelOpen={setPanelOpen}
+            setVehiclePanel={setVehiclePanel}
+            suggestion={suggestion}
+            activeField={activeField}
+            setPickup={setPickup}
+            setDestination={setDestination}
+            setSuggestion={setSuggestion}
+          />
+
+          <div className="mt-3 px-3 pb-3">
+            <label className="block text-sm font-medium mb-2">
+              Number of Passengers
+            </label>
+
+            <select
+              value={passengerCount}
+              onChange={(e) => setPassengerCount(Number(e.target.value))}
+              className="w-full p-3 rounded-lg border"
+            >
+              <option value={1}>1 Passenger</option>
+              <option value={2}>2 Passengers</option>
+              <option value={3}>3 Passengers</option>
+              <option value={4}>4 Passengers</option>
+            </select>
+          </div>
         </div>
 
         <div ref={vehiclePanelRef} className="fixed w-full z-10 bottom-0 px-3 py-10 bg-white translate-y-full">

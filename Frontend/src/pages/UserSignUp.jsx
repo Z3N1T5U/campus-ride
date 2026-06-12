@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UberBlackLogo from '/images/uber logo.png';
+import iitrblacklogo from '/images/campusblack_logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function UserSignUp() {
@@ -59,7 +59,7 @@ export default function UserSignUp() {
   return (
     <div className='p-5 h-screen flex flex-col justify-between'>
       <div className="">
-        <img src={UberBlackLogo} alt="" className="w-16 mb-5" />
+        <img src={iitrblacklogo} alt="" className="w-16 mb-5" />
         <form onSubmit={handleSubmit} className="p-3">
           <h3 className="text-lg font-semibold mb-2">What's your name</h3>
           <div className="flex gap-2 mb-7">
@@ -83,7 +83,6 @@ export default function UserSignUp() {
       {/* <div className="p-3">
         <Link to='/captain-signup' className="bg-[#10b461] flex items-center justify-center text-white rounded px-4 py-2 border w-full text-lg font-semibold">Sign In as Captain</Link>
       </div> */}
-      <p className="text-xs text-justify">We collect basic information and uploaded images to provide services and improve accuracy.Your data is secure, used only for analysis, and not shared without consent. using AgriScan, you agree to this policy.For questions, contact us at <span className="underline cursor-pointer">uberproject@gmail.com</span>.</p>
     </div>
   )
 }

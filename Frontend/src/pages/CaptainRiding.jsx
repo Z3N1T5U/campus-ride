@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import uberLogo from "../../public/images/uber logo.png";
+import iitrlogo from "../../public/images/campus_logo.png";
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 import FinishedRide from '../components/FinishedRide';
@@ -70,7 +70,7 @@ export default function CaptainRiding() {
         <div className='h-screen'>
 
             <div className="fixed p-3 top-0 w-full flex items-center justify-between z-20">
-                <img src={uberLogo} alt="" className="w-16" />
+                <img src={iitrlogo} alt="" className="w-16" />
 
                 <Link
                     to='/home'

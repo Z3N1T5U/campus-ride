@@ -1,5 +1,5 @@
 import React from 'react'
-import uberCar from "/images/uber car.webp";
+import erick from "/images/e-rick.png";
 
 export default function ConfirmRide({ setConfirmRidePanel, setVehicleFound, pickup, destination, selectedFare, vehicleImg, createRide}) {
 
@@ -12,7 +12,7 @@ export default function ConfirmRide({ setConfirmRidePanel, setVehicleFound, pick
   return (
     <div>
       <h5 onClick={() => setConfirmRidePanel(false)} className="p-1 text-center absolute top-0 w-[93%] cursor-pointer"><i className="ri-arrow-down-wide-fill text-2xl text-gray-500"></i></h5>
-      <h3 className="text-2xl font-semibold mb-3 mt-2">Confirm your Ride</h3>
+      <h3 className="text-2xl font-semibold mb-3 mt-2">Confirm Ride Request</h3>
       <div className="flex flex-col justify-between items-center gap-2">
         <img src={vehicleImg} alt="" className="h-20" />
         <div className="w-full mt-5">

@@ -50,7 +50,7 @@ export default function CaptainLogin() {
   return (
     <div className='p-5 h-screen flex flex-col justify-between'>
       <div className="">
-        <img src="https://www.svgrepo.com/show/505031/uber-driver.svg" alt="" className="w-16 mb-2" />
+        <img src="/images/campusblack_logo.png" alt="" className="w-16 mb-2" />
         <form className="p-3" onSubmit={handleSubmit}>
           <h3 className="text-lg font-semibold mb-2">What's your email</h3>
           <input type="email" required placeholder='captain@example.com' className="bg-[#eeeeee] rounded px-4 py-2 border w-full text-lg placeholder:text-base mb-7" id='email' onChange={handleChange} />
