@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectToDB } from "./db/db.js";
 import cookieParser from "cookie-parser";
 
+import ratingRoutes from "./routes/rating.route.js";
 import userRoutes from "./routes/user.route.js";
 import captainRoutes from "./routes/captain.route.js";
 import mapsRoutes from "./routes/maps.route.js";
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+app.use("/api/ratings", ratingRoutes);
 
 connectToDB();
 

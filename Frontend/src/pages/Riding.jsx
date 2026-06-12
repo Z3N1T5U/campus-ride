@@ -38,8 +38,14 @@ export default function Riding() {
     useEffect(() => {
         if (!newSocket) return;
 
-        const handleRideEnded = () => {
+        const handleRideEnded = (rideData) => {
             console.log("RIDE ENDED EVENT RECEIVED");
+
+            localStorage.setItem(
+                "completedRide",
+                JSON.stringify(rideData)
+            );
+
             navigate("/home");
         };
 

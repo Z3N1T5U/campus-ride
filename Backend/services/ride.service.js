@@ -24,10 +24,10 @@ export const createRide = async ({ user, pickup, destination, vehicleType, picku
         return errorHandler(400, "All fields are required");
     }
 
-    const fare = await getFare(pickup, destination);
+    const fare = await getFare(pickup, destination, passengerCount);
 
     const ride = rideModel.create({
-        user, pickup: pickup.name, destination: destination.name, passengerCount,fare: fare[vehicleType]*passengerCount, otp: getOtp(6), pickupLocation, distance, duration
+        user, pickup: pickup.name, destination: destination.name, passengerCount,fare: fare[vehicleType], otp: getOtp(6), pickupLocation, distance, duration
     });
 
     return ride;

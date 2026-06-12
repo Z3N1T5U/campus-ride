@@ -1,5 +1,6 @@
 import http from "http";
 import app from "./app.js";
+import ratingRoutes from "./routes/rating.route.js";
 import { initializeSocket } from "./socket.js";
 
 const port = process.env.PORT || 3000;

@@ -34,6 +34,8 @@ export default function Home() {
     ltd: null,
     lng: null
   });
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
+  const [completedRide, setCompletedRide] = useState(null);
   const [passengerCount, setPassengerCount] = useState(1);
   const [panelOpen, setPanelOpen] = useState(false);
   const [restoringRide, setRestoringRide] = useState(false);
@@ -104,6 +106,19 @@ export default function Home() {
       })
     }
   }, [socket]);
+
+  useEffect(() => {
+
+    const ride = localStorage.getItem("completedRide");
+
+    if (ride) {
+
+        setCompletedRide(JSON.parse(ride));
+        setShowRatingPopup(true);
+
+    }
+
+}, []);
 
 useEffect(() => {
   const restoreRide = async () => {
@@ -301,6 +316,7 @@ useEffect(() => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
           pickup, destination, passengerCount
@@ -325,11 +341,14 @@ useEffect(() => {
   }
 
   const createRide = async () => {
+    console.log("CREATE RIDE FUNCTION CALLED");
     try {
+      console.log("BEFORE FETCH");
       const res = await fetch("/api/ride/create", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
           pickup,
@@ -342,15 +361,29 @@ useEffect(() => {
           }
         })
       });
-
+      console.log("AFTER FETCH");
+      console.log(res);
       const data = await res.json();
-      if (data.success === false) {
-        return;
-        console.log(data.message);
-      }
-      console.log("created ride: ", data);
+
+console.log("STATUS:", res.status);
+console.log("DATA:", data);
+
+if (!res.ok) {
+  console.log("BACKEND ERROR:", data);
+  return;
+}
+
+console.log("created ride: ", data);
+
     } catch (error) {
+       console.log("FULL ERROR");
       console.log(error);
+
+      console.log("RESPONSE");
+      console.log(error.response);
+
+      console.log("DATA");
+      console.log(error.response?.data);
     }
   }
 
@@ -371,6 +404,36 @@ useEffect(() => {
   }, []);
 
   return (
+
+    <>
+{showRatingPopup && (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
+
+        <div className="bg-white p-6 rounded-xl w-[90%] max-w-sm">
+
+            <h2 className="text-xl font-semibold mb-2">
+                Rate Your Driver
+            </h2>
+
+            <p className="text-gray-600">
+                Ride completed successfully.
+            </p>
+
+            <button
+                onClick={() => {
+                    localStorage.removeItem("completedRide");
+                    setShowRatingPopup(false);
+                }}
+                className="mt-4 bg-black text-white px-4 py-2 rounded-lg"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+)}
+
     <div className='h-screen relative'>
       {restoringRide && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-black text-white px-5 py-3 rounded-lg shadow-lg z-[9999]">
@@ -450,5 +513,6 @@ useEffect(() => {
         </div>
       </div>
     </div>
+  </>
   )
 }

@@ -16,14 +16,27 @@ export const createRideController = async (req, res, next) => {
     const { pickup, destination, vehicleType, pickupLocation,passengerCount } = req.body;
     
     try {
+        console.log("CREATE RIDE CONTROLLER HIT");    
+        console.log("BEFORE DISTANCE CALC");  
         const distanceAndTime = await getDistanceTimeService(pickup, destination);
-
+        console.log("AFTER DISTANCE CALC");
         const ride = await createRide({ user: req.user._id, pickup, destination, vehicleType, pickupLocation, distance: Math.round(distanceAndTime.distance), duration: Math.round(distanceAndTime.duration),passengerCount});
+        console.log("RIDE CREATED");
+        let captainsInRadius = [];
 
-        const captainsInRadius = await getCaptainsInTheRadius(
-            pickupLocation.ltd, pickupLocation.lng, 2);
-        console.log("CAPTAINS FOUND:", captainsInRadius.length);
-        console.log(captainsInRadius);
+            try {
+                captainsInRadius = await getCaptainsInTheRadius(
+                    pickupLocation.ltd,
+                    pickupLocation.lng,
+                    2
+                );
+
+                console.log("CAPTAINS FOUND:", captainsInRadius.length);
+
+            } catch (err) {
+                console.log("GET CAPTAINS ERROR:");
+                console.log(err);
+            }
 
         const rideWithUser = await rideModel.findOne({_id: ride._id}).populate('user');
 
@@ -36,6 +49,8 @@ export const createRideController = async (req, res, next) => {
 
         return res.status(201).json(rideWithUser);
     } catch (error) {
+        console.log("CREATE RIDE ERROR:");
+        console.log(error);
         next(error);
     }
 }

@@ -33,6 +33,11 @@ const rideSchema = new mongoose.Schema({
         default: 'pending',
     },
 
+    isRated: {
+        type: Boolean,
+        default: false
+    },
+
     passengerCount: {
         type: Number,
         default: 1

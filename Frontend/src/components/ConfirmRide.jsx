@@ -4,6 +4,7 @@ import erick from "/images/e-rick.png";
 export default function ConfirmRide({ setConfirmRidePanel, setVehicleFound, pickup, destination, selectedFare, vehicleImg, createRide}) {
 
   const handleConfirm = () => {
+    console.log("CONFIRM BUTTON CLICKED");
     setVehicleFound(true);
     setConfirmRidePanel(false);
     createRide();
