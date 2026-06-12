@@ -21,6 +21,10 @@ export default function Riding() {
         lng: ""
     });
 
+    const [showPaymentPopup, setShowPaymentPopup] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState("UPI");
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+
     // Re-register socket after refresh
     useEffect(() => {
         if (!newSocket || !currentUser) return;
@@ -72,6 +76,80 @@ export default function Riding() {
 
     return (
         <div className='h-screen'>
+            {showPaymentPopup && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
+
+                    <div className="bg-white p-6 rounded-xl w-[90%] max-w-sm">
+
+                        {!paymentSuccess ? (
+                            <>
+                                <h2 className="text-xl font-semibold mb-4">
+                                    Complete Payment
+                                </h2>
+
+                                <p className="mb-3">
+                                    Fare: ₹{ride?.fare}
+                                </p>
+
+                                <select
+                                    value={paymentMethod}
+                                    onChange={(e) =>
+                                        setPaymentMethod(e.target.value)
+                                    }
+                                    className="w-full border rounded-lg p-3 mb-4"
+                                >
+                                    <option value="UPI">
+                                        UPI Payment
+                                    </option>
+
+                                    <option value="Cash">
+                                        Cash
+                                    </option>
+                                </select>
+
+                                <button
+                                    onClick={() => {
+                                        setPaymentSuccess(true);
+                                    }}
+                                    className="w-full bg-green-600 text-white py-3 rounded-lg"
+                                >
+                                    Pay Now
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <div className="text-center">
+
+                                    <div className="text-5xl mb-3">
+                                        ✅
+                                    </div>
+
+                                    <h2 className="text-xl font-semibold">
+                                        Payment Successful
+                                    </h2>
+
+                                    <p className="text-gray-600 mt-2">
+                                        Method: {paymentMethod}
+                                    </p>
+
+                                    <button
+                                        onClick={() => {
+                                            setShowPaymentPopup(false);
+                                            setPaymentSuccess(false);
+                                        }}
+                                        className="mt-5 w-full bg-black text-white py-3 rounded-lg"
+                                    >
+                                        Done
+                                    </button>
+
+                                </div>
+                            </>
+                        )}
+
+                    </div>
+
+                </div>
+            )}
             <Link to='/home' className="fixed right-2 top-2 h-10 w-10 bg-white flex items-center justify-center rounded-full z-20">
                 <i className="text-lg ri-home-4-fill"></i>
             </Link>
@@ -119,7 +197,12 @@ export default function Riding() {
                         </div>
                     </div>
                 </div>
-                <button className='w-full mt-5 mt- bg-green-600 text-white  px-2 py-3 rounded-lg text-lg'>Make a Payment</button>
+               <button
+                    onClick={() => setShowPaymentPopup(true)}
+                    className='w-full mt-5 bg-green-600 text-white px-2 py-3 rounded-lg text-lg'
+                >
+                    Make Payment
+                </button>
             </div>
         </div>
     )

@@ -1,564 +1,321 @@
-# Overview
-This Uber Clone is a fully functional ride-booking platform inspired by real-world ride-hailing services. Built with the powerful MERN Stack, integrated with real-time communication via Socket.io, and enhanced with interactive mapping using Leaflet, it provides a seamless user and captain experience.
+# Campus Ride Management Platform - Backend
 
-# ER Diagram
-<img width="4465" height="2962" alt="diagram-export-8-12-2025-9_49_34-PM" src="https://github.com/user-attachments/assets/e349f092-771f-4802-9520-23897f587359" />
+## Overview
 
-# API Documentation
+The Campus Ride Management Platform is a real-time transportation management system designed for campus environments such as universities, educational institutions, and large organizational campuses.
 
-## Endpoint: `/users/signUp`
+The backend powers ride creation, ride assignment, real-time communication, driver management, analytics, ratings, payment tracking, and demand insights.
 
-### Description
-This endpoint is used to register a new user. It validates the input data, hashes the password, creates a new user in the database, and returns a JSON Web Token (JWT) along with the user data.
-
-### Method
-`POST`
-
-### Request Body
-The request body should be a JSON object with the following fields:
-- `fullName`: An object containing:
-  - `firstName`: A string with a minimum length of 3 characters (required)
-  - `lastName`: A string with a minimum length of 3 characters (optional)
-- `email`: A valid email address (required)
-- `password`: A string with a minimum length of 6 characters (required)
-
-Example:
-```json
-{
-  "fullName": {
-    "firstName": "John",
-    "lastName": "Doe"
-  },
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-```
-
-### Example Response
-The response will be a JSON object with the following fields:
-- `token`: A JSON Web Token (JWT) for authentication
-- `user`: An object containing the user data:
-  - `_id`: The user's unique identifier
-  - `fullName`: An object containing:
-    - `firstName`: The user's first name
-    - `lastName`: The user's last name
-  - `email`: The user's email address
-
-Example:
-```json
-{
-  "token": "your_jwt_token_here",
-  "user": {
-    "_id": "user_id_here",
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john.doe@example.com"
-  }
-}
-```
-
-## Endpoint: `/users/login`
-
-### Description
-This endpoint is used to log in an existing user. It validates the input data, checks the user's credentials, and returns a JSON Web Token (JWT) along with the user data.
-
-### Method
-`POST`
-
-### Request Body
-The request body should be a JSON object with the following fields:
-- `email`: A valid email address (required)
-- `password`: A string with a minimum length of 6 characters (required)
-
-Example:
-```json
-{
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-```
-
-### Example Response
-The response will be a JSON object with the following fields:
-- `token`: A JSON Web Token (JWT) for authentication
-- `user`: An object containing the user data:
-  - `_id`: The user's unique identifier
-  - `fullName`: An object containing:
-    - `firstName`: The user's first name
-    - `lastName`: The user's last name
-  - `email`: The user's email address
-
-Example:
-```json
-{
-  "token": "your_jwt_token_here",
-  "user": {
-    "_id": "user_id_here",
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john.doe@example.com"
-  }
-}
-```
-## Endpoint: `/users/profile`
-
-### Description
-This endpoint is used to get the profile of the authenticated user.
-
-### Method
-`GET`
-
-### Headers
-- `Authorization`: Bearer token (required)
-
-### Example Response
-The response will be a JSON object containing the user data:
-- `_id`: The user's unique identifier
-- `fullName`: An object containing:
-  - `firstName`: The user's first name
-  - `lastName`: The user's last name
-- `email`: The user's email address
-
-Example:
-```json
-{
-  "_id": "user_id_here",
-  "fullName": {
-    "firstName": "John",
-    "lastName": "Doe"
-  },
-  "email": "john.doe@example.com"
-}
-```
-
-## Endpoint: `/users/logout`
-
-### Description
-This endpoint is used to log out the authenticated user. It clears the authentication token from the cookies and adds the token to a blacklist.
-
-### Method
-`GET`
-
-### Headers
-- `Authorization`: Bearer token (required) or cookie token required
-
-### Example Response
-The response will be a JSON object with a message indicating successful logout.
-
-Example:
-```json
-{
-  "message": "Logged Out Successfully"
-}
-```
-
-## Endpoint: `/captains/signUp`
-
-### Description
-This endpoint is used to register a new captain. It validates the input data, hashes the password, creates a new captain in the database, and returns a JSON Web Token (JWT) along with the captain data.
-
-### Method
-`POST`
-
-### Request Body
-The request body should be a JSON object with the following fields:
-- `fullName`: An object containing:
-  - `firstName`: A string with a minimum length of 3 characters (required)
-  - `lastName`: A string with a minimum length of 3 characters (optional)
-- `email`: A valid email address (required)
-- `password`: A string with a minimum length of 6 characters (required)
-- `vehicle`: An object containing:
-  - `color`: A string with a minimum length of 3 characters (required)
-  - `plate`: A string with a minimum length of 3 characters (required)
-  - `capacity`: An integer with a minimum value of 1 (required)
-  - `vehicleType`: A string that must be one of `car`, `bike`, or `auto` (required)
-
-Example:
-```json
-{
-  "fullName": {
-    "firstName": "Jane",
-    "lastName": "Doe"
-  },
-  "email": "jane.doe@example.com",
-  "password": "password123",
-  "vehicle": {
-    "color": "red",
-    "plate": "ABC123",
-    "capacity": 4,
-    "vehicleType": "car"
-  }
-}
-```
-
-### Example Response
-The response will be a JSON object with the following fields:
-- `token`: A JSON Web Token (JWT) for authentication
-- `captain`: An object containing the captain data:
-  - `_id`: The captain's unique identifier
-  - `fullName`: An object containing:
-    - `firstName`: The captain's first name
-    - `lastName`: The captain's last name
-  - `email`: The captain's email address
-  - `vehicle`: An object containing:
-    - `color`: The vehicle's color
-    - `plate`: The vehicle's plate
-    - `capacity`: The vehicle's capacity
-    - `vehicleType`: The vehicle's type
-
-Example:
-```json
-{
-  "token": "your_jwt_token_here",
-  "captain": {
-    "_id": "captain_id_here",
-    "fullName": {
-      "firstName": "Jane",
-      "lastName": "Doe"
-    },
-    "email": "jane.doe@example.com",
-    "vehicle": {
-      "color": "red",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-  }
-}
-```
-
-## Endpoint: `/captains/login`
-
-### Description
-This endpoint is used to log in an existing captain. It validates the input data, checks the captain's credentials, and returns a JSON Web Token (JWT) along with the captain data.
-
-### Method
-`POST`
-
-### Request Body
-The request body should be a JSON object with the following fields:
-- `email`: A valid email address (required)
-- `password`: A string with a minimum length of 6 characters (required)
-
-Example:
-```json
-{
-  "email": "jane.doe@example.com",
-  "password": "password123"
-}
-```
-
-### Example Response
-The response will be a JSON object with the following fields:
-- `token`: A JSON Web Token (JWT) for authentication
-- `captain`: An object containing the captain data:
-  - `_id`: The captain's unique identifier
-  - `fullName`: An object containing:
-    - `firstName`: The captain's first name
-    - `lastName`: The captain's last name
-  - `email`: The captain's email address
-  - `vehicle`: An object containing:
-    - `color`: The vehicle's color
-    - `plate`: The vehicle's plate
-    - `capacity`: The vehicle's capacity
-    - `vehicleType`: The vehicle's type
-
-Example:
-```json
-{
-  "token": "your_jwt_token_here",
-  "captain": {
-    "_id": "captain_id_here",
-    "fullName": {
-      "firstName": "Jane",
-      "lastName": "Doe"
-    },
-    "email": "jane.doe@example.com",
-    "vehicle": {
-      "color": "red",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-  }
-}
-```
-
-## Endpoint: `/captains/profile`
-
-### Description
-This endpoint is used to get the profile of the authenticated captain.
-
-### Method
-`GET`
-
-### Headers
-- `Authorization`: Bearer token (required)
-
-### Example Response
-The response will be a JSON object containing the captain data:
-- `_id`: The captain's unique identifier
-- `fullName`: An object containing:
-  - `firstName`: The captain's first name
-  - `lastName`: The captain's last name
-- `email`: The captain's email address
-- `vehicle`: An object containing:
-  - `color`: The vehicle's color
-  - `plate`: The vehicle's plate
-  - `capacity`: The vehicle's capacity
-  - `vehicleType`: The vehicle's type
-
-Example:
-```json
-{
-  "_id": "captain_id_here",
-  "fullName": {
-    "firstName": "Jane",
-    "lastName": "Doe"
-  },
-  "email": "jane.doe@example.com",
-  "vehicle": {
-    "color": "red",
-    "plate": "ABC123",
-    "capacity": 4,
-    "vehicleType": "car"
-  }
-}
-```
-
-## Endpoint: `/captains/logout`
-
-### Description
-This endpoint is used to log out the authenticated captain. It clears the authentication token from the cookies and adds the token to a blacklist.
-
-### Method
-`GET`
-
-### Headers
-- `Authorization`: Bearer token (required) or cookie token required
-
-### Example Response
-The response will be a JSON object with a message indicating successful logout.
-
-Example:
-```json
-{
-  "message": "Logout successfully"
-}
-```
-
-
-# Ride API Endpoints
+The system is built using Node.js, Express.js, MongoDB, and Socket.IO, providing low-latency ride coordination between passengers and drivers.
 
 ---
 
-## Endpoint: `/ride/create`
+## Key Features
 
-### Description
-This endpoint is used to create a new ride request. The user must provide pickup and destination locations along with the preferred vehicle type.
+### Authentication & Authorization
 
-### Method
-`POST`
+* JWT-based authentication
+* Separate User and Driver accounts
+* Secure login and registration
+* Protected APIs using middleware
+* Token blacklisting for logout
 
-### Headers
-- `Authorization`: Bearer token (User, required)
+### Driver Management
 
-### Request Body
-```json
-{
-  "pickup": { "lat": 22.5726, "lng": 88.3639 },
-  "destination": { "lat": 22.5800, "lng": 88.3700 },
-  "vehicleType": "car",
-  "pickupLocation": { "ltd": 22.5726, "lng": 88.3639 }
-}
+* Driver registration
+* Vehicle information management
+* Driver verification workflow
+* Online / Offline availability toggle
+* Driver profile management
+
+### Ride Management
+
+* Ride request creation
+* Ride assignment workflow
+* OTP-based ride verification
+* Complete ride lifecycle management:
+
+  * Pending
+  * Accepted
+  * Ongoing
+  * Completed
+  * Cancelled
+
+### Real-Time Communication
+
+* Socket.IO integration
+* Live ride notifications
+* Driver assignment updates
+* Ride status synchronization
+* Active session restoration
+
+### Ratings & Feedback
+
+* Passenger ride ratings
+* Written feedback support
+* Average driver rating calculation
+* Driver performance tracking
+
+### Analytics & Insights
+
+* Campus-wide ride analytics
+* Revenue tracking
+* Peak demand hour detection
+* Popular route analysis
+* Demand prediction engine
+* Driver performance dashboard
+
+### Payments
+
+* Simulated UPI payments
+* Cash payment support
+* Payment status tracking
+* Payment history support
+
+---
+
+## Tech Stack
+
+### Backend Framework
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Authentication
+
+* JWT
+* bcrypt
+
+### Real-Time Communication
+
+* Socket.IO
+
+### Maps & Geolocation
+
+* OpenStreetMap
+* Nominatim APIs
+* Leaflet-compatible services
+
+---
+
+## Database Models
+
+### User
+
+Stores passenger information.
+
+Fields:
+
+* Full Name
+* Email
+* Password
+* Socket ID
+
+### Captain
+
+Stores driver information.
+
+Fields:
+
+* Personal Information
+* Vehicle Details
+* Verification Status
+* Availability Status
+* Current Location
+* Socket ID
+
+### Ride
+
+Stores ride lifecycle data.
+
+Fields:
+
+* Passenger
+* Driver
+* Pickup
+* Destination
+* Fare
+* Distance
+* Duration
+* Passenger Count
+* Ride Status
+* OTP
+* Payment Details
+* Rating Status
+
+### Rating
+
+Stores passenger feedback.
+
+Fields:
+
+* Ride
+* Passenger
+* Driver
+* Rating
+* Feedback
+
+---
+
+## Real-Time Ride Workflow
+
+Passenger Creates Ride
+↓
+Ride Stored in Database
+↓
+Nearby Drivers Identified
+↓
+Socket.IO Notification Sent
+↓
+Driver Accepts Ride
+↓
+Passenger Receives Confirmation
+↓
+OTP Verification
+↓
+Ride Starts
+↓
+Ride Ends
+↓
+Payment
+↓
+Rating & Feedback
+
+---
+
+## Analytics Engine
+
+The backend generates:
+
+### Campus Insights
+
+* Total rides
+* Revenue generated
+* Average rating
+* Popular route
+* Peak demand hour
+
+### Driver Insights
+
+* Completed rides
+* Active rides
+* Earnings
+* Driver ratings
+* Performance statistics
+
+### Demand Prediction
+
+Historical ride data is analyzed to estimate periods of increased demand and identify transportation hotspots across campus.
+
+---
+
+## API Modules
+
+### User APIs
+
+* Registration
+* Login
+* Logout
+* Profile Management
+
+### Driver APIs
+
+* Registration
+* Login
+* Availability Management
+* Verification Workflow
+* Dashboard Statistics
+
+### Ride APIs
+
+* Create Ride
+* Fare Estimation
+* Accept Ride
+* Start Ride
+* End Ride
+* Ride History
+
+### Rating APIs
+
+* Submit Rating
+* Driver Rating Analytics
+
+### Analytics APIs
+
+* Campus Insights
+* Driver Analytics
+* Demand Statistics
+
+---
+
+## Environment Variables
+
+Create a `.env` file:
+
+```env
+PORT=4000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_jwt_secret
+
+NODE_ENV=development
 ```
 
-### Example Response
-```json
-{
-  "_id": "ride_id_here",
-  "user": { /* user info */ },
-  "pickup": { /* coordinates */ },
-  "destination": { /* coordinates */ },
-  "vehicleType": "car",
-  "distance": 5,
-  "duration": 12
-}
+---
 
-```
-## Endpoint: `/ride/get-fare`
+## Installation
 
-### Description
-This endpoint calculates the estimated fare based on the pickup and destination.
+Install dependencies:
 
-### Method
-`POST`
-
-### Headers
-- `Authorization`: Bearer token (User, required)
-
-### Request Body
-```json
-{
-  "pickup": { "lat": 22.5726, "lng": 88.3639 },
-  "destination": { "lat": 22.5800, "lng": 88.3700 }
-}
+```bash
+npm install
 ```
 
-### Example Response
-```json
-{
-  "fare": 120,
-  "distance": 5,
-  "duration": 12
-}
+Start backend:
 
-```
-## Endpoint: `/ride/confirm`
-
-### Description
-This endpoint is used by the captain to confirm a ride request.
-
-### Method
-`POST`
-
-### Headers
-- `Authorization`: Bearer token (Captain, required)
-
-### Request Body
-```json
-{
-  "rideId": "ride_id_here",
-  "captainId": "captain_id_here"
-}
+```bash
+npm start
 ```
 
-### Example Response
-```json
-{
-  "_id": "ride_id_here",
-  "status": "confirmed",
-  "captain": "captain_id_here"
-}
-```
-## Endpoint: `/ride/start-ride`
+For development:
 
-### Description
-This endpoint is used by the captain to start a ride after verifying the ride OTP.
-
-### Method
-`GET`
-
-### Headers
-- `Authorization`: Bearer token (Captain, required)
-
-### Query Parameters
-- `rideId`: A valid ride ID (required)
-- `otp`:  A string OTP (required)
-
-### Example Bash
-```json
-/ride/start-ride?rideId=ride_id_here&otp=1234
-
+```bash
+npm run dev
 ```
 
-### Example Response
-```json
-{
-  "_id": "ride_id_here",
-  "status": "started"
-}
+---
 
-```
-## Endpoint: `/ride/end-ride`
+## Future Enhancements
 
-### Description
-This endpoint is used by the captain to end the ride.
+* Ride Scheduling
+* Dynamic Pricing
+* ML-Based Demand Forecasting
+* Real-Time Driver Tracking
+* Campus Shuttle Integration
+* Production Payment Gateway Integration
 
-### Method
-`POST`
+---
 
-### Headers
-- `Authorization`: Bearer token (Captain, required)
+## Competition Alignment
 
-### Example Body
-```json
-{
-  "rideId": "ride_id_here"
-}
-```
+This project satisfies the major requirements of the Real-Time Campus Mobility and Ride Management Platform challenge:
 
-### Example Response
-```json
-{
-  "_id": "ride_id_here",
-  "status": "completed"
-}
-```
+* Authentication System
+* Driver Onboarding
+* Ride Request Workflow
+* Real-Time Updates
+* Ride Lifecycle Management
+* Driver Dashboard
+* Ratings & Feedback
+* Live Map Integration
+* Demand Analytics
+* Demand Prediction
+* Digital Payment Simulation
 
-# Maps API Endpoints
-
-## Endpoint: `/maps/get-coordinates`
-
-### Description
-This endpoint is used to retrieve the geographical coordinates (latitude and longitude) of a provided address.
-
-### Method
-`GET`
-
-### Headers
-- `Authorization`: Bearer token (User required)
-
-### Query Parameters
-- `address:` A valid address string (required)
-
-### Example Bash
-```json
-/maps/get-coordinates?address=Kolkata
-
-```
-
-### Example Response
-```json
-{
-  "lat": 22.5726,
-  "lng": 88.3639
-}
-```
-## Endpoint: `/maps/get-distance-time`
-
-### Description
-This endpoint is used to calculate the distance and estimated travel time between two addresses.
-
-### Method
-`GET`
-
-### Headers
-- `Authorization`: Bearer token (User or Captain, required)
-
-### Query Parameters
-- `origin:` Starting address (required)
-
-- `destination:` Destination address (required)
-
-### Example Bash
-```json
-/maps/get-distance-time?origin=Kolkata&destination=Howrah
-```
-### Example Response
-```json
-{
-  "distance": {
-    "text": "6.5 km",
-    "value": 6500
-  },
-  "duration": {
-    "text": "15 mins",
-    "value": 900
-  }
-}
-```
+The platform is designed to demonstrate scalable real-time transportation management within a campus ecosystem.

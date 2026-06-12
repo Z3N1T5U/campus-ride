@@ -1,108 +1,344 @@
-#  Clone – Ride Booking Platform
+# Real-Time Campus Mobility and Ride Management Platform
 
-**Live Link:** 
+## Live Deployment
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+### Frontend
+
+**Live URL:** `ADD_FRONTEND_DEPLOYMENT_LINK_HERE`
+
+### Backend API
+
+**API URL:** `ADD_BACKEND_DEPLOYMENT_LINK_HERE`
+
+---
+
+## Project Overview
+
+The Real-Time Campus Mobility and Ride Management Platform is a full-stack transportation management system designed for campus environments such as universities, educational institutions, and large organizational campuses.
+
+The platform enables passengers and drivers to seamlessly connect through a centralized ride-booking system while supporting real-time ride updates, driver availability management, analytics, ratings, payments, and demand insights.
+
+Built using the MERN Stack with Socket.IO and Leaflet integration, the platform focuses on efficient ride coordination, scalability, and user experience.
+
+---
 
 ## Website Preview
-### Ride Creation
-![ride1](https://github.com/user-attachments/assets/a94a4148-0f57-4f47-8e0f-ba2c27bf0e20)
 
-### Confirm Ride
-![ride2](https://github.com/user-attachments/assets/059c68d0-e1ef-4c9d-b868-07e212583a60)
+### Ride Booking
 
+(Add Screenshot)
 
+### Driver Ride Request
 
+(Add Screenshot)
 
-## Overview
+### OTP Verification
 
-This Uber Clone is a fully functional ride-booking platform inspired by real-world ride-hailing services. Built with the powerful MERN Stack, integrated with real-time communication via Socket.io, and enhanced with interactive mapping using Leaflet, it provides a seamless user and captain experience.
+(Add Screenshot)
 
-## Table of Contents
+### Ride Tracking
 
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+(Add Screenshot)
 
-## Features
+### Driver Dashboard
 
-- **User & Captain Authentication:** Role-based sign-up, login, JWT authentication, and secure access control for users and captains.
-- **Real-Time Ride Tracking:** Using Socket.io to establish real-time connections for live ride updates, including ride status, captain location, and OTP-based ride start.
-- **Dynamic Map Integration:** Leaflet is used for displaying and interacting with maps, showing routes, captain locations, and ride destinations in real-time.
-- **Ride Lifecycle Management:** Full ride flow: Create ride → Calculate fare → Captain confirmation → OTP verification → Start/End ride.
-- **Captain Vehicle Info & Availability:** Captains register with vehicle details and are shown in real-time to users when searching for nearby rides.
-- **Distance & Time Calculation:** Uses mapping APIs to calculate estimated fare, distance, and time between two geolocations.
+(Add Screenshot)
 
-## Technologies Used
+### Campus Insights Dashboard
 
-- **MongoDB:** NoSQL database for storing user, captain, and ride data.
-- **Express.js:** Backend API built with RESTful structure and validation.
-- **React.js:** Front-end UI with reusable components and real-time updates.
-- **Node.js:** Server runtime to handle business logic and connections.
-- **Socket.io:** Enables real-time communication between users and captains for ride updates.
-- **Leaflet.js:** Interactive mapping to visualize pickups, drop-offs, and captain movements.
-- **JWT (JSON Web Tokens):** Secure token-based authentication for sessions.
+(Add Screenshot)
 
+---
 
-## Project Setup
+## Key Features
 
-### Getting Started
+### Authentication & User Management
 
-Follow the steps below to set up and run the application on your local machine:
+#### Passenger Features
 
-1. **Clone the Repository**
+* User Registration
+* User Login
+* Secure JWT Authentication
+* Profile Management
 
-```bash
-git clone https://github.com/Avijit200318/Uber-Clone.git
+#### Driver Features
+
+* Driver Registration
+* Driver Login
+* Vehicle Information Management
+* Driver Verification Workflow
+* Online / Offline Status Management
+
+---
+
+### Ride Management
+
+#### Passenger
+
+* Create Ride Requests
+* Select Pickup Location
+* Select Destination
+* Passenger Count Support
+* Fare Estimation
+* Ride Status Tracking
+
+#### Driver
+
+* Receive Nearby Ride Requests
+* Accept Ride Requests
+* Reject Ride Requests
+* Manage Ride Lifecycle
+
+---
+
+### Real-Time Communication
+
+Powered by Socket.IO:
+
+* Live Ride Notifications
+* Driver Availability Updates
+* Ride Assignment Updates
+* Real-Time Status Synchronization
+* Session Recovery After Refresh
+* Live Ride Completion Events
+
+---
+
+### Ride Lifecycle
+
+Complete ride workflow:
+
+```text
+Ride Requested
+      ↓
+Ride Accepted
+      ↓
+OTP Verification
+      ↓
+Ride Started
+      ↓
+Ride Completed
+      ↓
+Payment
+      ↓
+Rating & Feedback
 ```
 
-2. **Add all the .env variables**
-- Make sure to update the values (like API keys, Mongo URI, etc.) inside both .env files according to .env.txt file local setup or environment.
+---
 
-3. **Install and Start Backend**
+### Maps & Navigation
+
+* OpenStreetMap Integration
+* Leaflet Maps
+* Live Driver Tracking
+* Pickup Visualization
+* Destination Visualization
+* Distance & Duration Calculation
+
+---
+
+### Ratings & Feedback
+
+Passengers can:
+
+* Rate Completed Rides
+* Provide Written Feedback
+* Submit Driver Reviews
+
+The platform maintains:
+
+* Average Driver Ratings
+* Driver Feedback Records
+* Driver Performance Metrics
+
+---
+
+### Driver Dashboard
+
+Each driver receives:
+
+* Completed Ride Statistics
+* Active Ride Count
+* Total Earnings
+* Average Rating
+* Driver Status Monitoring
+* Analytics Dashboard
+
+---
+
+### Campus Insights & Analytics
+
+The platform generates:
+
+* Total Rides Completed
+* Revenue Generated
+* Average Platform Rating
+* Most Popular Routes
+* Peak Demand Hours
+* Demand Prediction Insights
+
+---
+
+### Digital Payments
+
+Supported payment options:
+
+* UPI Payment (Simulated)
+* Cash Payment
+* Payment Confirmation Workflow
+* Payment History Tracking
+
+---
+
+## Technology Stack
+
+### Frontend
+
+* React.js
+* Redux Toolkit
+* Tailwind CSS
+* Leaflet
+* Socket.IO Client
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+* Socket.IO
+
+### Authentication
+
+* JWT Authentication
+* Password Hashing (bcrypt)
+
+### Database
+
+* MongoDB Atlas
+
+---
+
+## System Architecture
+
+```text
+Passenger App                Driver App
+       │                           │
+       └────────────┬──────────────┘
+                    │
+               React Frontend
+                    │
+         Socket.IO + REST APIs
+                    │
+              Express Backend
+                    │
+               MongoDB Atlas
+                    │
+    Analytics + Ratings + Payments
+```
+
+---
+
+## Project Structure
+
+```text
+campus-ride/
+│
+├── Frontend/
+│   ├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── redux/
+│   └── utils/
+│
+├── Backend/
+│   ├── controllers/
+│   ├── routes/
+│   ├── models/
+│   ├── services/
+│   ├── middlewares/
+│   └── socket.js
+│
+└── README.md
+```
+
+---
+
+## Installation & Setup
+
+### Clone Repository
+
 ```bash
+git clone YOUR_REPOSITORY_LINK
+```
+
+### Backend Setup
+
+```bash
+cd Backend
+
 npm install
+
 npm run dev
 ```
 
-This starts the backend server on http://localhost:4000
+Backend runs on:
 
-4. **Install and Start Frontend**
+```text
+http://localhost:4000
+```
+
+---
+
+### Frontend Setup
+
 ```bash
 cd Frontend
+
 npm install
+
 npm run dev
 ```
-This starts the frontend server on http://localhost:5173
 
-⚠️ Make sure your backend server is running before launching the frontend.
+Frontend runs on:
 
+```text
+http://localhost:5173
+```
 
+---
 
-## Usage
+## Competition Requirements Covered
 
-### For Users:
+### Mandatory Features
 
-1. **Sign Up / Login** as a user.
-2. **Create Ride** by selecting pickup and destination locations.
-3. **Get Fare Estimate** and wait for a captain to confirm.
-4. **Verify OTP** shared by the captain before starting the ride.
-5. **Track Ride** in real-time until it’s completed.
+* User Authentication
+* Driver Onboarding
+* Driver Availability Management
+* Ride Request Workflow
+* Real-Time Ride Updates
+* Ride Lifecycle Management
+* Driver Dashboard
+* Ratings & Feedback
 
-### For Captains:
+### Additional Features
 
-1. **Sign Up / Login** with vehicle details.
-2. **See New Ride Requests** in real-time via Socket.io.
-3. **Confirm Ride** and reach the pickup point.
-4. **Start Ride** after OTP verification and **End Ride** upon completion.
+* Live Map Integration
+* Digital Payments
+* Ride History
+* Campus Analytics Dashboard
+* Demand Prediction
+* Driver Performance Analytics
 
-## Contributing
+---
 
-Contributions are welcome! Whether you're fixing a bug, enhancing features, or suggesting improvements, feel free to submit a pull request or open an issue.
+## Future Enhancements
 
-## License
+* Ride Scheduling
+* Dynamic Pricing
+* Advanced Demand Forecasting
+* Campus Shuttle Integration
+* Production Payment Gateway
+* AI-Based Ride Demand Prediction
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for full details.
-
+---

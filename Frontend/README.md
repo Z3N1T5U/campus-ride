@@ -1,8 +1,90 @@
-# React + Vite
+# Campus Ride Management Platform - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This frontend is built using React, Vite, Redux Toolkit, Tailwind CSS, Socket.IO Client, and Leaflet Maps.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+It provides the passenger and driver interfaces for the Campus Ride Management Platform, including ride booking, ride management, analytics dashboards, payments, ratings, and real-time updates.
+
+---
+
+## Features
+
+### Passenger Features
+
+* User Authentication
+* Ride Booking
+* Fare Estimation
+* Real-Time Ride Updates
+* Ride Tracking
+* Payment Flow
+* Ratings & Feedback
+* Campus Insights Dashboard
+* Ride History
+
+### Driver Features
+
+* Driver Authentication
+* Availability Toggle
+* Incoming Ride Requests
+* Ride Acceptance
+* OTP Verification
+* Driver Dashboard
+* Performance Analytics
+* Earnings Tracking
+
+---
+
+## Tech Stack
+
+* React
+* Vite
+* Redux Toolkit
+* Tailwind CSS
+* Socket.IO Client
+* Leaflet
+
+---
+
+## Installation
+
+```bash
+npm install
+```
+
+---
+
+## Run Development Server
+
+```bash
+npm run dev
+```
+
+Application runs on:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## Build Production Version
+
+```bash
+npm run build
+```
+
+---
+
+## Project Structure
+
+```text
+src/
+│
+├── components/
+├── pages/
+├── redux/
+├── assets/
+├── utils/
+└── App.jsx
+```
